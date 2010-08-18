@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<title>Coffee in Browser</title>
+<pre id=out></pre>
+<script src=coffee-script.js></script>
+<script type=text/coffeescript>
+self.say = (msg) ->
+  document.getElementById('out').appendChild document.createTextNode msg
+say 'Hello, '
+</script>
+<script type=text/coffeescript src=hello.coffee></script>
