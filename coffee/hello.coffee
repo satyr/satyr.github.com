@@ -1,1 +1,0 @@
-say "CoffeeScript #{exports.VERSION}!"

@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <title>Coffee in Browser</title>
-<pre id=out></pre>
+<textarea id=code cols=80 rows=8>puts "CoffeeScript #{CoffeeScript.VERSION}"
+</textarea><div id=btns></div><pre id=out></pre>
 <script src=coffee-script.js></script>
-<script type=text/coffeescript>
-self.say = (msg) ->
-  document.getElementById('out').appendChild document.createTextNode msg
-say 'Hello, '
-</script>
-<script type=text/coffeescript src=hello.coffee></script>
+<script type=text/coffeescript src=console.coffee></script>
