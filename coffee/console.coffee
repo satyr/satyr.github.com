@@ -13,7 +13,7 @@ for key of CoffeeScript when key isnt 'VERSION'
   btn = document.createElement 'button'
   k = btn.accessKey = key.charAt 0
   btn.id = key
-  btn.onclick = -> puts CoffeeScript[@id] code.value
+  btn.onclick = -> puts CoffeeScript[@id] code.value, noWrap: on
   btn.appendChild document.createTextNode k.toUpperCase() + key.slice 1
   btns.appendChild btn
 $('run').click()
