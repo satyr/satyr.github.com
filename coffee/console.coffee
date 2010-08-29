@@ -1,5 +1,8 @@
 CoffeeScript.run = (cs) -> eval @compile cs, noWrap: on
 
+self.append = (lmn, txt) ->
+  lmn.appendChild document.createTextNode txt
+  lmn
 self.print = (msg) ->
   out = document.getElementById 'out'
   out.insertBefore document.createTextNode(msg), out.firstChild
@@ -14,6 +17,15 @@ for key of CoffeeScript when key isnt 'VERSION'
   k = btn.accessKey = key.charAt 0
   btn.id = key
   btn.onclick = -> puts CoffeeScript[@id] code.value, noWrap: on
-  btn.appendChild document.createTextNode k.toUpperCase() + key.slice 1
+  append btn, k.toUpperCase() + key.slice 1
   btns.appendChild btn
-$('run').click()
+
+run = $ 'run'
+append run, ' (Ctrl + Enter)'
+code.onkeydown = (ev) ->
+  ev ||= event
+  if ev.ctrlKey && ev.keyCode is 13
+    run.click()
+    false
+
+setTimeout -> run.click()
