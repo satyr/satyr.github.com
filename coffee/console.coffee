@@ -1,5 +1,3 @@
-CoffeeScript.run = (cs) -> eval @compile cs, noWrap: on
-
 self.append = (lmn, txt) ->
   lmn.appendChild document.createTextNode txt
   lmn
@@ -12,7 +10,7 @@ self.$ = (id) -> document.getElementById id
 
 code = $ 'code'
 btns = $ 'btns'
-for key of CoffeeScript when key isnt 'VERSION'
+for key of CoffeeScript when key not in ['VERSION', 'run', 'load']
   btn = document.createElement 'button'
   k = btn.accessKey = key.charAt 0
   btn.id = key
@@ -20,12 +18,12 @@ for key of CoffeeScript when key isnt 'VERSION'
   append btn, k.toUpperCase() + key.slice 1
   btns.appendChild btn
 
-run = $ 'run'
-append run, ' (Ctrl + Enter)'
+eva1 = $ 'eval'
+append eva1, ' (Ctrl + Enter)'
 code.onkeydown = (ev) ->
   ev ||= event
   if ev.ctrlKey && ev.keyCode is 13
-    run.click()
+    eva1.click()
     false
 
-setTimeout -> run.click()
+setTimeout -> eva1.click()
