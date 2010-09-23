@@ -1,22 +1,29 @@
-self.append = (lmn, txt) ->
-  lmn.appendChild document.createTextNode txt
-  lmn
-self.print = (msg) ->
-  out = document.getElementById 'out'
-  out.insertBefore document.createTextNode(msg), out.firstChild
-  msg
-self.puts = (msg) -> print "#{msg}\n"; msg
-self.$ = (id) -> document.getElementById id
+$ = (id) -> document.getElementById id
+append = (lmn, txt) -> lmn.appendChild document.createTextNode txt
+echoer = (fn) -> (it) -> fn it; it
+
+self.print =
+  echoer (msg) ->
+    pout.insertBefore document.createTextNode(msg), pout.firstChild
+self.say = self.puts =
+  echoer (msg) -> print msg + '\n'
+self.p =
+  echoer (it) -> say JSON.stringify it, null, 2
 
 code = $ 'code'
 btns = $ 'btns'
+pout = $ 'pout'
+
 for key of CoffeeScript when key not in ['VERSION', 'run', 'load']
   btn = document.createElement 'button'
   k = btn.accessKey = key.charAt 0
   btn.id = key
-  btn.onclick = -> puts CoffeeScript[@id] code.value, noWrap: on
   btn.onfocus = -> code.focus()
-  append btn, k.toUpperCase() + key.slice 1
+  btn.onclick = ->
+    {value} = code
+    location.hash = encodeURI value
+    puts CoffeeScript[@id] value, noWrap: on
+  append btn, k.toUpperCase() + key[1..]
   btns.appendChild btn
 
 eva1 = $ 'eval'
@@ -26,5 +33,7 @@ code.onkeydown = (ev) ->
   if ev.ctrlKey && ev.keyCode is 13
     eva1.click()
     false
-
-setTimeout -> eva1.click()
+setTimeout ->
+  if c = location.hash[1..]
+    code.value = try decodeURIComponent c catch _ then c
+  eva1.click()
