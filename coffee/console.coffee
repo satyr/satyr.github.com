@@ -2,13 +2,10 @@ $ = (id) -> document.getElementById id
 append = (lmn, txt) -> lmn.appendChild document.createTextNode txt
 echoer = (fn) -> (it) -> fn it; it
 
-self.print =
-  echoer (msg) ->
-    pout.insertBefore document.createTextNode(msg), pout.firstChild
-self.say = self.puts =
-  echoer (msg) -> print msg + '\n'
-self.p =
-  echoer (it) -> say JSON.stringify it, null, 2
+self.print = echoer (msg) ->
+  pout.insertBefore document.createTextNode(msg), pout.firstChild
+self.say = self.puts = echoer (msg) -> print msg + '\n'
+self.p = echoer (it) -> say JSON.stringify it, null, 2
 
 code = $ 'code'
 ctrl = $ 'ctrl'
@@ -22,7 +19,7 @@ for key of CoffeeScript when key not in ['VERSION', 'run', 'load']
   btn.onclick = ->
     {value} = code
     location.hash = @id.charAt() + ':' + encodeURI value
-    puts CoffeeScript[@id] value, noWrap: on
+    (if @id is 'tokens' then p else puts) CoffeeScript[@id] value, noWrap: on
   k = btn.accessKey = key.charAt()
   K = k.toUpperCase()
   append btn, K + key[1..]
