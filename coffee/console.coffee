@@ -11,22 +11,24 @@ self.p =
   echoer (it) -> say JSON.stringify it, null, 2
 
 code = $ 'code'
-btns = $ 'btns'
+ctrl = $ 'ctrl'
 pout = $ 'pout'
+btns = {}
 
 for key of CoffeeScript when key not in ['VERSION', 'run', 'load']
   btn = document.createElement 'button'
-  k = btn.accessKey = key.charAt 0
   btn.id = key
   btn.onfocus = -> code.focus()
   btn.onclick = ->
     {value} = code
-    location.hash = encodeURI value
+    location.hash = @id.charAt() + ':' + encodeURI value
     puts CoffeeScript[@id] value, noWrap: on
-  append btn, k.toUpperCase() + key[1..]
-  btns.appendChild btn
+  k = btn.accessKey = key.charAt()
+  K = k.toUpperCase()
+  append btn, K + key[1..]
+  btns[key] = btns[k] = ctrl.appendChild btn
 
-eva1 = $ 'eval'
+eva1 = btns.eval
 append eva1, ' (Ctrl + Enter)'
 code.onkeydown = (ev) ->
   ev ||= event
@@ -34,6 +36,8 @@ code.onkeydown = (ev) ->
     eva1.click()
     false
 setTimeout ->
-  if c = location.hash[1..]
-    code.value = try decodeURIComponent c catch _ then c
-  eva1.click()
+  if cf = location.hash[1..]
+    try cf = decodeURIComponent cf catch _
+    {$1: op, rightContext: cf} = RegExp if /^([a-v]+):/.test cf
+    code.value = cf
+  (if op then btns[op.toLowerCase()] else eva1).click()
