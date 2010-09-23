@@ -15,6 +15,7 @@ for key of CoffeeScript when key not in ['VERSION', 'run', 'load']
   k = btn.accessKey = key.charAt 0
   btn.id = key
   btn.onclick = -> puts CoffeeScript[@id] code.value, noWrap: on
+  btn.onfocus = -> code.focus()
   append btn, k.toUpperCase() + key.slice 1
   btns.appendChild btn
 
