@@ -36,7 +36,7 @@ for key of CoffeeScript when key not in ['VERSION', 'run', 'load']
   btns[key] = btns[k] = ctrl.appendChild btn
 
 for k, b of {C: eva1 = btns.eval, S: cmpl = btns.compile}
-  b.innerHTML += " <small><code>\\#{k}-RET</code></small>"
+  b.innerHTML += " <small><kbd>\\#{k}-RET</kbd></small>"
 document.onkeydown = (ev) ->
   return if (ev ||= event).keyCode isnt 13 || ev.altKey || ev.metaKey
   return unless b = (ev.ctrlKey && eva1) || (ev.shiftKey && cmpl)
