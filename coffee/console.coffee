@@ -11,27 +11,27 @@ code = $ 'code'
 ctrl = $ 'ctrl'
 pout = $ 'pout'
 btns = {}
+poem = code.value
 
 for key of CoffeeScript when key not in ['VERSION', 'run', 'load']
   btn = document.createElement 'button'
   btn.id = key
-  btn.onfocus = -> code.focus()
   btn.onclick = ->
+    code.focus()
     {value} = code
-    location.hash = @id.charAt() + ':' + encodeURI value
+    location.hash = @id.charAt() + ':' + encodeURI value if value isnt poem
     (if @id is 'tokens' then p else puts) CoffeeScript[@id] value, noWrap: on
-  k = btn.accessKey = key.charAt()
-  K = k.toUpperCase()
+  k = key.charAt()
+  K = btn.accessKey = k.toUpperCase()
   append btn, K + key[1..]
   btns[key] = btns[k] = ctrl.appendChild btn
 
 eva1 = btns.eval
 append eva1, ' (Ctrl + Enter)'
-code.onkeydown = (ev) ->
-  ev ||= event
-  if ev.ctrlKey && ev.keyCode is 13
+document.onkeydown = (ev) ->
+  if (ev ||= event).ctrlKey && ev.keyCode is 13
     eva1.click()
-    false
+    off
 setTimeout ->
   if cf = location.hash[1..]
     try cf = decodeURIComponent cf catch _
