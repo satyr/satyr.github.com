@@ -1,33 +1,42 @@
 $ = (id) -> document.getElementById id
-append = (lmn, txt) -> lmn.appendChild document.createTextNode txt
-echoer = (fn) -> (it) -> fn it; it
+silence = Date()
 
-self.print = echoer (msg) ->
-  pout.insertBefore document.createTextNode(msg), pout.firstChild
-self.say = self.puts = echoer (msg) -> print msg + '\n'
-self.p = echoer (it) -> say JSON.stringify it, null, 2
+self.print = (msg, tag) ->
+  return if msg is silence
+  lmn = document.createElement tag || 'span'
+  lmn.appendChild document.createTextNode msg + '\n'
+  pout.insertBefore lmn, pout.firstChild
+  silence
+self.say = self.puts = (xs...) -> print xs.join '\n'
+self.warn = (er) -> print er, 'em'
+self.p = (xs...) -> say (JSON.stringify x, null, 2 for x in xs).join '\n'
 
 code = $ 'code'
 ctrl = $ 'ctrl'
 pout = $ 'pout'
 btns = {}
 poem = code.value
+kick = ->
+  code.focus()
+  {value} = code
+  location.hash = @id.charAt() + ':' + encodeURI value if value isnt poem
+  try r = CoffeeScript[@id] value, noWrap: on
+  catch e
+    warn e
+    throw e
+  (if @id is 'tokens' then p else puts) r
 
 for key of CoffeeScript when key not in ['VERSION', 'run', 'load']
   btn = document.createElement 'button'
   btn.id = key
-  btn.onclick = ->
-    code.focus()
-    {value} = code
-    location.hash = @id.charAt() + ':' + encodeURI value if value isnt poem
-    (if @id is 'tokens' then p else puts) CoffeeScript[@id] value, noWrap: on
+  btn.onclick = kick
   k = key.charAt()
   K = btn.accessKey = k.toUpperCase()
-  append btn, K + key[1..]
+  btn.innerHTML = K + key[1..]
   btns[key] = btns[k] = ctrl.appendChild btn
 
 eva1 = btns.eval
-append eva1, ' (Ctrl + Enter)'
+eva1.innerHTML += ' (Ctrl + Enter)'
 document.onkeydown = (ev) ->
   if (ev ||= event).ctrlKey && ev.keyCode is 13
     eva1.click()
