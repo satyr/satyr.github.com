@@ -35,12 +35,13 @@ for key of CoffeeScript when key not in ['VERSION', 'run', 'load']
   btn.innerHTML = K + key[1..]
   btns[key] = btns[k] = ctrl.appendChild btn
 
-eva1 = btns.eval
-eva1.innerHTML += ' (Ctrl + Enter)'
+for k, b of {C: eva1 = btns.eval, S: cmpl = btns.compile}
+  b.innerHTML += " <small><code>\\#{k}-RET</code></small>"
 document.onkeydown = (ev) ->
-  if (ev ||= event).ctrlKey && ev.keyCode is 13
-    eva1.click()
-    off
+  return if (ev ||= event).keyCode isnt 13 || ev.altKey || ev.metaKey
+  return unless b = (ev.ctrlKey && eva1) || (ev.shiftKey && cmpl)
+  b.click()
+  off
 setTimeout ->
   if cf = location.hash[1..]
     try cf = decodeURIComponent cf catch _
