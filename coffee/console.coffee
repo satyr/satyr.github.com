@@ -21,10 +21,13 @@ kick = ->
   {value} = code
   location.hash = @id.charAt() + ':' + encodeURI value if value isnt poem
   try r = CoffeeScript[@id] value, noWrap: on
-  catch e
-    warn e
-    throw e
-  (if @id is 'tokens' then p else puts) r
+  catch e then warn e; throw e
+  switch @accessKey
+    when 'T'
+      r = ("[#{t} #{v}]" for [t, v] in r).join(' ').replace /\n/g, '\\n'
+    when 'N'
+      r = "#{r}".replace /^\s+/, ''
+  puts r
 
 for key of CoffeeScript when key not in ['VERSION', 'run', 'load']
   btn = document.createElement 'button'
