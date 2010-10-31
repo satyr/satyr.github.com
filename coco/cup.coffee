@@ -69,4 +69,4 @@ setTimeout ->
 self.onfocus = -> code.focus()
 
 Coco.VERSION += '+'
-Coco.TREE = '3da65eb5da45d3a198fc2bde256537393e7579fa'
+Coco.TREE = 'e2208e20d0a4e86eafd9d658fb5ff545ba76d9c8'
