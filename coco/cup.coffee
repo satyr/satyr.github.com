@@ -26,9 +26,10 @@ Coco.TREE
 
 
 
-###
-Not to abandon the evil parts
-But to embrace the good parts
+
+
+
+### radical yet practical
 '''
 kick = ->
   code.focus()
@@ -69,4 +70,4 @@ setTimeout ->
 self.onfocus = -> code.focus()
 
 Coco.VERSION += '+'
-Coco.TREE = 'e2208e20d0a4e86eafd9d658fb5ff545ba76d9c8'
+Coco.TREE = '4fef604daea77dec0f72766db0ce6377560ad26e'
