@@ -1,0 +1,54 @@
+SGC = \http://satyr.github.com/
+AMO = \https://addons.mozilla.org/
+AGC = \http://appengine.google.com/
+UHG = \https://ubiquity.mozilla.com/hg/ubiquity-firefox/
+ICO_PATH = [
+  \https://github.com/satyr/ \/raw/master/ \/chrome/icons/default/ \.ico
+]
+
+doctype \html
+meta charset: \utf-8
+title \satyr
+pre -> A 'javascript:new function _() ["javascript:new " + _]'
+ul ->
+  coco = SGC + \coco
+  limg coco + \/coco.png, -> A coco, \Coco; text ' Apps'; ul ->
+    lico \cup
+    lico \ckup
+    li -> A \https://github.com/satyr/retrie/, \retrie
+  limg AMO + \favicon.ico, -> A AMO, 'Firefox Addons'; ul ->
+    lifx 196133, \lmnpop
+    lifx 159546, \xqjs
+    lifx 122179, \uc
+    li ->
+      linkmg do
+        \http://mozillalabs.com/ubiquity/, 'Mozilla Ubiquity'
+        UHG + \raw-file/tip/ubiquity/chrome/skin/icons/ubiquibot24.png
+      ul style: \list-style-image:none, ->
+        li -> A UHG, \Repo
+        li -> A \http://bitbucket.org/satyr/ubiquity/downloads/, \Download
+        li -> A AMO + \addon/9527/, \AMO
+        li -> text \Feeds; ul ->
+          ligist 60561 , \google++
+          ligist 103277, \twols
+          ligist 99201 , \copy
+          ligist 402862, \replace
+  limg AGC + \favicon.ico, -> A AGC, 'GAE Apps'; ul ->
+    ligae \ubigist
+    ligae \miscapis
+
+function limg (url, ...fs) ->
+  li class: img, style: \list-style-image:url( + url + \)
+  , -> fs.forEach -> do it
+function linkmg (url, app, src) ->
+  A url, app, \\n, -> img width: 24, align: \absmiddle, border: \none, src
+
+function lico (app) ->
+  url = SGC + app + \/
+  limg url + app + \.png, -> A url, app
+function lifx (num, app) ->
+  li -> linkmg AMO + \addon/ + num, app, ICO_PATH.join app
+function ligae (app) ->
+  li -> a href: "http://#{app}.appspot.com", []=app
+function ligist (num, app) ->
+  limg \https://gist.github.com/, -> A \http://gist.github.com/ + num, app
