@@ -15,7 +15,7 @@ ul ->
   limg coco + \/coco.png, -> A coco, \Coco; text ' Apps'; ul ->
     lico \cup
     lico \ckup
-    li -> A \https://github.com/satyr/retrie/, \retrie
+    lico \retrie
   limg AMO + \favicon.ico, -> A AMO, 'Firefox Addons'; ul ->
     lifx 196133, \lmnpop
     lifx 159546, \xqjs
@@ -38,7 +38,7 @@ ul ->
     ligae \miscapis
 
 function limg (url, ...fs) ->
-  li class: img, style: \list-style-image:url( + url + \)
+  li class: \img, style: \list-style-image:url( + url + \)
   , -> fs.forEach -> do it
 function linkmg (url, app, src) ->
   A url, app, \\n, -> img width: 24, align: \absmiddle, border: \none, src
